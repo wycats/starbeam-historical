@@ -139,9 +139,32 @@ importers:
       swc: 1.0.11
       trace-unhandled: 2.0.1
       ts-jest: 27.1.3_6b0d86d8ea3c96e8ea491094db2c87f3
-      ts-node: github.com/TypeStrong/ts-node/9e255575aa44a8af3cb01f4d810f8480541fe943_ca7feaaa5921069a95a8dd621d0e648c
+      ts-node: github.com/TypeStrong/ts-node/4717fc90f7183d98c63ff28368cf3e859d89c049_ca7feaaa5921069a95a8dd621d0e648c
       typescript: 4.7.0-dev.20220408
       watcher: 1.2.0
+
+  '@starbeam/advanced-db':
+    specifiers:
+      '@starbeam/core': workspace:*
+      '@starbeam/debug': workspace:*
+      '@starbeam/debug-utils': workspace:*
+      '@starbeam/fundamental': workspace:*
+      '@starbeam/reactive': workspace:*
+      '@starbeam/test-utils': workspace:*
+      '@starbeam/trace-internals': workspace:*
+      '@starbeam/utils': workspace:*
+      '@starbeam/verify': workspace:*
+    dependencies:
+      '@starbeam/core': link:../core
+      '@starbeam/debug': link:../debug
+      '@starbeam/fundamental': link:../fundamental
+      '@starbeam/reactive': link:../reactive
+      '@starbeam/utils': link:../utils
+    devDependencies:
+      '@starbeam/debug-utils': link:../debug-utils
+      '@starbeam/test-utils': link:../test-utils
+      '@starbeam/trace-internals': link:../trace-internals
+      '@starbeam/verify': link:../verify
 
   '@starbeam/config':
     specifiers:
@@ -199,6 +222,7 @@ importers:
   '@starbeam/db':
     specifiers:
       '@starbeam/core': workspace:*
+      '@starbeam/debug': workspace:*
       '@starbeam/debug-utils': workspace:*
       '@starbeam/fundamental': workspace:*
       '@starbeam/reactive': workspace:*
@@ -208,6 +232,7 @@ importers:
       '@starbeam/verify': workspace:*
     dependencies:
       '@starbeam/core': link:../core
+      '@starbeam/debug': link:../debug
       '@starbeam/fundamental': link:../fundamental
       '@starbeam/reactive': link:../reactive
       '@starbeam/utils': link:../utils
@@ -581,7 +606,7 @@ importers:
       zen-observable-ts: 0.8.21
     devDependencies:
       highlight.js: 11.5.1
-      typescript: 4.7.0-dev.20220425
+      typescript: 4.7.0-dev.20220505
       vue: 3.2.33
 
   notes/examples:
@@ -629,7 +654,7 @@ importers:
       '@starbeam/trace-internals': link:../@starbeam/trace-internals
       '@starbeam/utils': link:../@starbeam/utils
       '@starbeam/verify': link:../@starbeam/verify
-      typescript: 4.7.0-dev.20220425
+      typescript: 4.7.0-dev.20220505
     devDependencies:
       '@jest/globals': 27.4.6
       '@types/lodash.zip': 4.2.6
@@ -648,7 +673,7 @@ packages:
     resolution: {integrity: sha512-hoyByceqwKirw7w3Z7gnIIZC3Wx3J484Y3L/cMpXFbr7d9ZQj2mODrirNzcJa+SM3UlpWXYvKV4RlRpFXlWgXg==}
     engines: {node: '>=6.0.0'}
     dependencies:
-      '@jridgewell/trace-mapping': 0.3.4
+      '@jridgewell/trace-mapping': 0.3.9
 
   /@apidevtools/json-schema-ref-parser/9.0.9:
     resolution: {integrity: sha512-GBD2Le9w2+lVFoc4vswGI/TjkNIZSVp7+9xPf+X3uidBfWnAeUWmquteSyt0+VCrhNMWj/FTABISQrD3Z/YA+w==}
@@ -1912,16 +1937,11 @@ packages:
   /@bcoe/v8-coverage/0.2.3:
     resolution: {integrity: sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==}
 
-  /@cspotcode/source-map-consumer/0.8.0:
-    resolution: {integrity: sha512-41qniHzTU8yAGbCp04ohlmSrZf8bkf/iJsl3V0dRGsQN/5GFfx+LbCSsCpp2gqrqjTVg/K6O8ycoV35JIwAzAg==}
-    engines: {node: '>= 12'}
-    dev: true
-
-  /@cspotcode/source-map-support/0.7.0:
-    resolution: {integrity: sha512-X4xqRHqN8ACt2aHVe51OxeA2HjbcL4MqFqXkrmQszJ1NOUuUu5u6Vqx/0lZSVNku7velL5FC/s5uEAj1lsBMhA==}
+  /@cspotcode/source-map-support/0.8.1:
+    resolution: {integrity: sha512-IchNf6dN4tHoMFIn/7OE8LWZ19Y6q/67Bmf6vnGREv8RSbBVb9LPJxEcnwrcwX6ixSvaiGoomAUvu4YSxXrVgw==}
     engines: {node: '>=12'}
     dependencies:
-      '@cspotcode/source-map-consumer': 0.8.0
+      '@jridgewell/trace-mapping': 0.3.9
     dev: true
 
   /@cucumber/gherkin-streams/5.0.0_2bb9b7055768c50a3660edae117b2230:
@@ -2227,8 +2247,8 @@ packages:
   /@jridgewell/sourcemap-codec/1.4.11:
     resolution: {integrity: sha512-Fg32GrJo61m+VqYSdRSjRXMjQ06j8YIYfcTqndLYVAaHmroZHLJZCydsWBOTDqXS2v+mjxohBWEMfg97GXmYQg==}
 
-  /@jridgewell/trace-mapping/0.3.4:
-    resolution: {integrity: sha512-vFv9ttIedivx0ux3QSjhgtCVjPZd5l46ZOMDSCwnH1yUO2e964gO8LZGyv2QkqcgR6TnBU1v+1IFqmeoG+0UJQ==}
+  /@jridgewell/trace-mapping/0.3.9:
+    resolution: {integrity: sha512-3Belt6tdc8bPgAtbcmdtNJlirVoTmEb5e2gC94PnkwEW9jI6CAHUeoG85tjWP5WquqfavoMtMwiG4P926ZKKuQ==}
     dependencies:
       '@jridgewell/resolve-uri': 3.0.5
       '@jridgewell/sourcemap-codec': 1.4.11
@@ -5712,7 +5732,7 @@ packages:
       pretty-format: 27.5.1
       slash: 3.0.0
       strip-json-comments: 3.1.1
-      ts-node: github.com/TypeStrong/ts-node/9e255575aa44a8af3cb01f4d810f8480541fe943_ca7feaaa5921069a95a8dd621d0e648c
+      ts-node: github.com/TypeStrong/ts-node/4717fc90f7183d98c63ff28368cf3e859d89c049_ca7feaaa5921069a95a8dd621d0e648c
     transitivePeerDependencies:
       - bufferutil
       - canvas
@@ -7996,8 +8016,8 @@ packages:
     hasBin: true
     dev: true
 
-  /typescript/4.7.0-dev.20220425:
-    resolution: {integrity: sha512-fMwLQ7gLYOCEH+fwhUajRCDSrEu8Pu26mL6HV1yk734f+00QGcKsAJTjgAyZ79rnYqQFzjIilegksYhZ7zrJAA==}
+  /typescript/4.7.0-dev.20220505:
+    resolution: {integrity: sha512-qbUbxvCcA12wDtMXQ6s/uljCQK0JO19NzlPivqqbDG96jWFhVBEL8NRsN8ML/PYEz1KSd9RM3o77T2SxFePLEw==}
     engines: {node: '>=4.2.0'}
     hasBin: true
 
@@ -8432,9 +8452,9 @@ packages:
     resolution: {integrity: sha512-PQ2PC7R9rslx84ndNBZB/Dkv8V8fZEpk83RLgXtYd0fwUgEjseMn1Dgajh2x6S8QbZAFa9p2qVCEuYZNgve0dQ==}
     dev: false
 
-  github.com/TypeStrong/ts-node/9e255575aa44a8af3cb01f4d810f8480541fe943_ca7feaaa5921069a95a8dd621d0e648c:
-    resolution: {tarball: https://codeload.github.com/TypeStrong/ts-node/tar.gz/9e255575aa44a8af3cb01f4d810f8480541fe943}
-    id: github.com/TypeStrong/ts-node/9e255575aa44a8af3cb01f4d810f8480541fe943
+  github.com/TypeStrong/ts-node/4717fc90f7183d98c63ff28368cf3e859d89c049_ca7feaaa5921069a95a8dd621d0e648c:
+    resolution: {tarball: https://codeload.github.com/TypeStrong/ts-node/tar.gz/4717fc90f7183d98c63ff28368cf3e859d89c049}
+    id: github.com/TypeStrong/ts-node/4717fc90f7183d98c63ff28368cf3e859d89c049
     name: ts-node
     version: 10.7.0
     hasBin: true
@@ -8451,7 +8471,7 @@ packages:
       '@swc/wasm':
         optional: true
     dependencies:
-      '@cspotcode/source-map-support': 0.7.0
+      '@cspotcode/source-map-support': 0.8.1
       '@swc/core': 1.2.159
       '@tsconfig/node10': 1.0.8
       '@tsconfig/node12': 1.0.9

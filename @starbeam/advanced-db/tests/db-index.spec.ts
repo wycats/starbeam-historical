@@ -60,7 +60,7 @@ test("indexing a table", async () => {
   expect(person.map((p) => p.id)).toEqual(["1"]);
 
   const nyNumbers = Formula(() =>
-    [...peopleInNewYork.current].flatMap((p) => contactsFor(db, p.id))
+    peopleInNewYork.current.flatMap((p) => contactsFor(db, p.id))
   );
 
   const contactsForTom = Formula(() => contactsFor(db, tom.id));
@@ -83,36 +83,62 @@ test("indexing a table", async () => {
   expect(contactsForTom.current.map((c) => c.columns.phone)).toEqual([
     "555-1234",
   ]);
-  // expect(
-  //   [...peopleInNewYork.current].map((p) => {
-  //     console.log(p.columns);
-  //     return p.columns.name;
-  //   })
-  // ).toEqual(["Tom"]);
-  // expect(nyNumbers.current.map((c) => c.columns.phone)).toEqual(["555-1234"]);
+  expect(
+    peopleInNewYork.current.map((p) => {
+      return p.columns.name;
+    })
+  ).toEqual(["Tom"]);
+  expect(nyNumbers.current.map((c) => c.columns.phone)).toEqual(["555-1234"]);
 
-  // const abie = people.create("2", {
-  //   name: "Abie",
-  //   location: locations.reference("1"),
-  //   contacts: reactive([]),
-  // });
+  const abie = people.create("2", {
+    name: "Abie",
+    location: locations.reference("1"),
+    contacts: reactive([]),
+  });
 
-  // // assert that the phone number list in nyNumbers hasn't changed
-  // expect(nyNumbers.current.map((c) => c.columns.phone)).toEqual(["555-1234"]);
+  expect(
+    peopleInNewYork.current.map((p) => {
+      return p.columns.name;
+    })
+  ).toEqual(["Tom", "Abie"]);
 
-  // // add a number to abie
-  // abie.mutate((draft) => {
-  //   const contact = contacts.create("2", {
-  //     phone: "555-5678",
-  //   });
-  //   draft.columns.contacts.push(contact.reference);
-  // });
+  // assert that the phone number list in nyNumbers hasn't changed
+  expect(nyNumbers.current.map((c) => c.columns.phone)).toEqual(["555-1234"]);
 
-  // // assert that the phone number list now has Abie's number
-  // expect(nyNumbers.current.map((c) => c.columns.phone)).toEqual([
-  //   "555-1234",
-  //   "555-5678",
-  // ]);
+  // add a number to abie
+  abie.mutate((draft) => {
+    const contact = contacts.create("2", {
+      phone: "555-5678",
+    });
+    draft.columns.contacts.push(contact.reference);
+  });
+
+  // assert that the phone number list now has Abie's number
+  expect(nyNumbers.current.map((c) => c.columns.phone)).toEqual([
+    "555-1234",
+    "555-5678",
+  ]);
+
+  // add another number to abie
+  abie.mutate((draft) => {
+    const contact = contacts.create("3", {
+      phone: "555-8765",
+    });
+    draft.columns.contacts.push(contact.reference);
+  });
+
+  // assert that the phone number list now has Abie's second number
+  expect(nyNumbers.current.map((c) => c.columns.phone)).toEqual([
+    "555-1234",
+    "555-5678",
+    "555-8765",
+  ]);
+
+  // delete abie
+  people.delete(abie);
+
+  // assert that the phone number list now has only Tom's number
+  expect(nyNumbers.current.map((c) => c.columns.phone)).toEqual(["555-1234"]);
 });
 
 type DB = Database<{

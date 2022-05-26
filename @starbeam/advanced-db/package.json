@@ -1,5 +1,5 @@
 {
-  "name": "@starbeam/db",
+  "name": "@starbeam/advanced-db",
   "type": "module",
   "main": "index.ts",
   "exports": {

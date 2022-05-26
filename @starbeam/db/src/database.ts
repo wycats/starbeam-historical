@@ -1,33 +1,26 @@
-import type { AnyRecord, InferReturn } from "@starbeam/fundamental";
 import type { Table, TableType } from "./table.js";
 
-type Concat<Tables extends AnyRecord, Type extends TableType> = Tables & {
-  [K in Type["name"]]: Type;
-};
+export type DatabaseFor<T extends TableType> = Database<
+  Record<T["name"], Table<T>>
+>;
 
-type TablesRecord<Tables extends AnyRecord> = {
-  [P in keyof Tables]: Table<Tables[P]>;
-};
-
-export class Database<Tables extends AnyRecord> {
+export class Database<Tables extends Record<string, Table>> {
   static create(): Database<{}> {
-    return new Database(new Map());
+    return new Database({});
   }
 
-  readonly #tables: Map<string, Table>;
+  readonly #tables: Tables;
 
-  private constructor(tables: Map<string, Table>) {
+  constructor(tables: Tables) {
     this.#tables = tables;
   }
 
-  add<T extends TableType>(table: Table<T>): Database<Concat<Tables, T>> {
-    this.#tables.set(table.name, table);
-    return this as InferReturn;
+  add<T extends Table>(table: T): Database<Tables & { [P in T["name"]]: T }> {
+    (this.#tables as any)[table.name] = table;
+    return this as any;
   }
 
-  query<U>(query: (tables: TablesRecord<Tables>) => U): U {
-    return query(
-      Object.fromEntries(this.#tables.entries()) as TablesRecord<Tables>
-    );
+  get<K extends keyof Tables>(name: K): Tables[K] {
+    return this.#tables[name];
   }
 }

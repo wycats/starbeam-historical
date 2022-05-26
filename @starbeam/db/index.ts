@@ -1,4 +1,5 @@
 export { Database } from "./src/database.js";
-export { Reference } from "./src/reference.js";
+export { type HasOne as RowReference } from "./src/reference.js";
 export { Row } from "./src/row.js";
-export { Table, type RowType } from "./src/table.js";
+export { Table, type CustomTable } from "./src/table.js";
+

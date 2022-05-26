@@ -1,17 +1,13 @@
 import { Formula } from "@starbeam/reactive";
-import { Table } from "../index.js";
+import { People } from "./shared.js";
 
-interface Person {
-  name: string;
-  location: string;
-}
+test("Creating a row", () => {
+  const people = People.create();
 
-test("An existing row", () => {
-  const table = Table.define<Person>().named("people");
-
-  const row = table.create("tomdale", {
+  const row = people.create("tomdale", {
     name: "tomdale",
     location: "Portland",
+    contacts: [],
   });
 
   const card = Formula(() => {
@@ -22,19 +18,8 @@ test("An existing row", () => {
   expect(row.columns).toMatchObject({ name: "tomdale", location: "Portland" });
   expect(card.current).toBe(`tomdale (Portland)`);
 
-  const draft = row.draft;
-
-  draft.mutate.name = "@tomdale";
-
-  expect(row.columns).toMatchObject({ name: "tomdale", location: "Portland" });
-  expect(card.current).toBe(`tomdale (Portland)`);
-
-  draft.commit();
+  row.mutate.name = "@tomdale";
 
   expect(row.columns).toMatchObject({ name: "@tomdale", location: "Portland" });
   expect(card.current).toBe(`@tomdale (Portland)`);
 });
-
-test("Creating a new row", () => {});
-
-export {};

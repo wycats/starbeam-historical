@@ -14,6 +14,14 @@ export class IndexMap<K, V> {
     this.#byValue = backward;
   }
 
+  *byKey(): IterableIterator<[K, Set<V>]> {
+    yield* this.#byKey.entries();
+  }
+
+  *byValue(): IterableIterator<[V, Set<K>]> {
+    yield* this.#byValue.entries();
+  }
+
   has(k: K, v: V): boolean {
     const set = this.#byKey.get(k);
     return set !== undefined && set.has(v);
@@ -49,6 +57,22 @@ export class IndexMap<K, V> {
     }
 
     return deleted && deleted2;
+  }
+
+  deleteKey(key: K): void {
+    this.#byKey.delete(key);
+
+    for (const [, keys] of this.#byValue) {
+      keys.delete(key);
+    }
+  }
+
+  deleteValue(value: V): void {
+    this.#byValue.delete(value);
+
+    for (const [, values] of this.#byKey) {
+      values.delete(value);
+    }
   }
 
   hasKey(a: K): boolean {

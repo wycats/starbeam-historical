@@ -5,6 +5,7 @@ import {
   builtin,
   type BuiltinDescription,
 } from "../reactive/builtins/builtin.js";
+import { TrackedMap } from "../reactive/builtins/map.js";
 import { is } from "../strippable/minimal.js";
 
 type BuiltinFunction = typeof builtin;
@@ -13,7 +14,14 @@ interface ReactiveDecorator {
   (target: object, key: symbol | string): void;
 }
 
-interface ReactiveFunction extends ReactiveDecorator, BuiltinFunction {}
+interface ReactiveStatics {
+  Map<K, V>(): Map<K, V>;
+}
+
+interface ReactiveFunction
+  extends ReactiveDecorator,
+    BuiltinFunction,
+    ReactiveStatics {}
 
 export const reactive: ReactiveFunction = (
   target: unknown,
@@ -39,6 +47,10 @@ export const reactive: ReactiveFunction = (
       cell.current = value;
     },
   };
+};
+
+reactive.Map = <K, V>(): Map<K, V> => {
+  return new TrackedMap();
 };
 
 export const cached = <T>(
