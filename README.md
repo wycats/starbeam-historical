@@ -1,4 +1,4 @@
-> **This repo is here as a historical artifact. The up-to-date version of Starbeam is located at https://github.com/starbeamjs/starbeam**
+## This repo is here as a historical artifact. The up-to-date version of Starbeam is located at https://github.com/starbeamjs/starbeam
 
 ---
 
