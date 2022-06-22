@@ -1,3 +1,7 @@
+> **This repo is here as a historical artifact. The up-to-date version of Starbeam is located at https://github.com/starbeamjs/starbeam**
+
+---
+
 Starbeam is a library for building reactive data systems that integrate natively
 with UI frameworks such as React, Vue, Svelte or Ember.
 
